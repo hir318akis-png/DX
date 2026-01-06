@@ -49,6 +49,10 @@ button {
     font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    transition: all 0.3s ease; /* transition は残しておくと、アニメーション解除時にもスムーズに戻ります */
+    position: relative; /* アニメーションのための設定 */
+    overflow: hidden; /* グラデーションがボタンからはみ出さないように */
+    z-index: 1; /* グラデーションの下に文字が来るように */
 }
 
 button:hover {
@@ -84,4 +88,43 @@ button:hover {
 
 .hidden {
     display: none;
+}
+
+/* 提案考え中のアニメーション用スタイル */
+.thinking-gradient {
+    /* 初期背景色を透明に (グラデーションを背景として使うため) */
+    background-color: transparent; 
+}
+
+/* アニメーションのキーフレーム定義 */
+@keyframes loading-gradient {
+    0% {
+        /* グラデーションの開始位置 */
+        background-position: 0% 50%;
+    }
+    50% {
+        /* グラデーションの中間位置 */
+        background-position: 100% 50%;
+    }
+    100% {
+        /* グラデーションの終了位置 (0%に戻る) */
+        background-position: 0% 50%;
+    }
+}
+
+/* アニメーション適用中のボタン */
+.thinking-gradient {
+    /* 動きのあるグラデーションを定義 (左右に広がる) */
+    background: linear-gradient(
+        270deg, 
+        #28a745, /* 元のボタンの色 */
+        #ffc107, /* ローディングの色1 (黄色) */
+        #007bff, /* ローディングの色2 (青) */
+        #28a745 /* 元のボタンの色 */
+    );
+    background-size: 400% 400%; /* グラデーションのサイズを大きくして、動きやすくする */
+    color: white; /* アニメーション中も文字が白く見えるように */
+    animation: loading-gradient 4s ease infinite; /* 4秒かけて無限にアニメーション */
+    /* ホバー時のスタイルを上書きして、アニメーション中はアニメーションを優先 */
+    pointer-events: none; /* アニメーション中はクリックできなくする */
 }

@@ -35,7 +35,8 @@ $(document).ready(function() {
         // 状態をリセットし、ローディングメッセージを表示
         $resultArea.html('');
         $loadingMessage.removeClass('hidden');
-        $button.prop('disabled', true).text('AIが考え中...');
+        $button.addClass('thinking-gradient');   // 1. ボタンにアニメーションクラスを追加
+        $button.prop('disabled', true).text('AIが考え中...');  // 2. ボタンを無効化し、テキストを変更
 
         // Geminiに送るプロンプトを構築
         const prompt = `
@@ -80,7 +81,8 @@ $(document).ready(function() {
         } finally {
             // 処理が完了したら状態を元に戻す
             $loadingMessage.addClass('hidden');
-            $button.prop('disabled', false).text('献立を提案する');
+            $button.removeClass('thinking-gradient');  // 1. ボタンからアニメーションクラスを削除
+            $button.prop('disabled', false).text('献立を提案する');  // 2. ボタンを有効化し、テキストを元に戻す
         }
     });
 });
